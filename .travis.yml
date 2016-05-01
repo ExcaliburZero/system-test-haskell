@@ -1,0 +1,14 @@
+language: haskell
+
+ghc:
+  - 7.8
+
+before_install:
+  - cabal install doctest
+
+script:
+  - cabal configure --enable-tests
+  - cabal build
+  - cabal test
+  - doctest src/Test.hs
+  - cabal haddock --executables
