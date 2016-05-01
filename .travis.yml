@@ -10,5 +10,5 @@ script:
   - cabal configure --enable-tests
   - cabal build
   - cabal test
-  - doctest src/Test.hs
+  - doctest src/*.hs
   - cabal haddock --executables
