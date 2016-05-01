@@ -28,6 +28,7 @@ data Test = Test
 
   >>> runTest (Test "Hello" "echo 'Hello, World!'" "Hello, World!")
   True
+
   >>> runTest (Test "Hello" "echo 'Goodbye, World!'" "Hello, World!")
   False
 -}
@@ -39,3 +40,21 @@ runTest (Test _ command expected) = do
   let actual = init actualNL
   let result = expected == actual
   return result
+
+{-|
+  Returns a String showing the results of the Test. Includes the name of the
+  Test and if it passed or failed.
+
+  >>> let test = Test "HelloTest" "echo 'Hello, World!'" "Hello, World!"
+  >>> result <- runTest test
+  >>> showResults test result
+  "HelloTest: Passed"
+
+  >>> let test = Test "GoodbyeTest" "echo 'Goodbye, World!'" "Hello, World!"
+  >>> result <- runTest test
+  >>> showResults test result
+  "GoodbyeTest: Failed"
+-}
+showResults :: Test -> Bool -> String
+showResults (Test name _ _) True = name ++ ": Passed"
+showResults (Test name _ _) False = name ++ ": Failed"
