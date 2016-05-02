@@ -18,6 +18,10 @@ data Test = Test
   }
   deriving (Show)
 
+-- | Represents the results of a single test, including if it passed or failed,
+-- and the actual output.
+type TestResults = (Bool, String)
+
 {-|
   Runs the command of a Test and checks to see if the output of the command is
   the same as the expected output of the Test.
@@ -26,20 +30,23 @@ data Test = Test
   True will be returned. However, if the expected and actual results are not
   equal, then False will be returned.
 
+  The actual output of the test is also returned, so that it can be printed out
+  in the case where the test fails.
+
   >>> runTest (Test "Hello" "echo 'Hello, World!'" "Hello, World!")
-  True
+  (True,"Hello, World!")
 
   >>> runTest (Test "Hello" "echo 'Goodbye, World!'" "Hello, World!")
-  False
+  (False,"Goodbye, World!")
 -}
-runTest :: Test -> IO Bool
+runTest :: Test -> IO TestResults
 runTest (Test _ command expected) = do
   (_, Just stdout, _, handler) <- createProcess (shell command){ std_out = CreatePipe }
   _ <- waitForProcess handler
   actualNL <- hGetContents stdout
   let actual = init actualNL
   let result = expected == actual
-  return result
+  return (result, actual)
 
 {-|
   Returns a String showing the results of the Test. Includes the name of the
@@ -53,8 +60,8 @@ runTest (Test _ command expected) = do
   >>> let test = Test "GoodbyeTest" "echo 'Goodbye, World!'" "Hello, World!"
   >>> result <- runTest test
   >>> showResults test result
-  "GoodbyeTest: Failed"
+  "GoodbyeTest: Failed\n  Expected: Hello, World!\n  Actual:   Goodbye, World!"
 -}
-showResults :: Test -> Bool -> String
-showResults (Test name _ _) True = name ++ ": Passed"
-showResults (Test name _ _) False = name ++ ": Failed"
+showResults :: Test -> TestResults -> String
+showResults (Test name _ _) (True, _) = name ++ ": Passed"
+showResults (Test name _ expected) (False, actual) = name ++ ": Failed\n  Expected: " ++ expected ++ "\n  Actual:   " ++ actual
