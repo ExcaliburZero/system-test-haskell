@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Hello World Test",
+    "command": "echo 'Hello, World!'",
+    "expectedOutput": "Hello, World!"
+  },
+  {
+    "name": "GoodBye World Test",
+    "command": "echo 'GoodBye, World!'",
+    "expectedOutput": "Hello, World!"
+  },
+  {
+    "name": "MultiLine Test",
+    "command": "echo '1' && echo '2'",
+    "expectedOutput": "1\n2"
+  }
+]

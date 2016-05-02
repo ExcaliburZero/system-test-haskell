@@ -7,10 +7,13 @@ Maintainer  : cwellsny@nycap.rr.com
 -}
 module Main where
 
+import Control.Applicative ((<$>))
+import Data.Aeson
+import Data.Text
+import qualified Data.ByteString.Lazy as B (readFile)
 import System.Environment (getArgs)
 import System.IO (hClose, hGetContents, openFile, IOMode(ReadMode))
 
-import Parser
 import Test
 
 {-|
@@ -27,12 +30,12 @@ main = do
 -}
 testFile :: String -> IO ()
 testFile file = do
-  handle <- openFile file ReadMode
-  contents <- hGetContents handle
-  let sections = toSections contents
-  let definitions = map toDefinition sections
-  let tests = map toTest definitions
-  results <- mapM runTest tests
-  let resultTexts = zipWith showResults tests results
-  _ <- mapM putStrLn resultTexts
-  hClose handle
+  let contents = B.readFile file
+  parsed <- (eitherDecode <$> contents) :: IO (Either String [Test])
+  case parsed of
+    Left err -> putStrLn err
+    Right tests -> do
+      results <- mapM runTest tests
+      let resultTexts = Prelude.zipWith showResults tests results
+      _ <- mapM putStrLn resultTexts
+      return ()

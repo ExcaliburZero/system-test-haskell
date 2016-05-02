@@ -7,6 +7,10 @@ Maintainer  : cwellsny@nycap.rr.com
 -}
 module Test where
 
+import Control.Applicative ((<$>), (<*>))
+import Control.Monad (mzero)
+import Data.Aeson
+import Data.Text
 import System.IO (hGetContents)
 import System.Process (CreateProcess(..), createProcess, shell, StdStream(CreatePipe), waitForProcess)
 
@@ -16,7 +20,18 @@ data Test = Test
   , command        :: String -- ^ The command the to be run for the Test.
   , expectedOutput :: String -- ^ The expected result of the output of the command.
   }
-  deriving (Show)
+
+-- | Shows the contents of the values of the Test.
+instance Show Test where
+  show test = "Test {name = " ++ show (name test) ++ ", command = " ++ show (command test) ++ ", expectedOutput = " ++ show (expectedOutput test) ++ "}"
+
+-- | Converts JSON into Test.
+instance FromJSON Test where
+  parseJSON (Object v) = Test
+    <$> v .: pack "name"
+    <*> v .: pack "command"
+    <*> v .: pack "expectedOutput"
+  parseJSON _ = mzero
 
 -- | Represents the results of a single test, including if it passed or failed,
 -- and the actual output.
@@ -44,7 +59,7 @@ runTest (Test _ command expected) = do
   (_, Just stdout, _, handler) <- createProcess (shell command){ std_out = CreatePipe }
   _ <- waitForProcess handler
   actualNL <- hGetContents stdout
-  let actual = init actualNL
+  let actual = Prelude.init actualNL
   let result = expected == actual
   return (result, actual)
 

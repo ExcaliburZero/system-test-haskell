@@ -2,13 +2,18 @@
 System Test is a Haskell application which allows you to specify and run system tests of applications. System tests can be defined in text files with the following format, see `examples/` for more examples:
 
 ```
-Hello World Test
-echo "Hello, World!"
-Hello, World!
-----
-GoodBye World Test
-echo "GoodBye, World!"
-GoodBye, World!
+[
+  {
+    "name": "Hello World Test",
+    "command": "echo 'Hello, World!'",
+    "expectedOutput": "Hello, World!"
+  },
+  {
+    "name": "GoodBye World Test",
+    "command": "echo 'GoodBye, World!'",
+    "expectedOutput": "Hello, World!"
+  }
+]
 ```
 
 ## Usage
@@ -20,16 +25,26 @@ system-test tests/*.txt
 ```
 
 ### Test File Structure
-Each test file should contain one or more system tests. Each test has a name, command, and expected output. If you have more than one test in a file, then they should be separated by a line of four dashes (`----`). An example of the structure is as follows:
+The system test files are formatted using JSON. The file should contain a list of Tests, each of which should have Strings for the test name, command, and expected output.
 
 ```
-NAME
-COMMAND
-EXPECTED OUTPUT
-----
-NAME
-COMMAND
-EXPECTED OUTPUT
+[
+  {
+    "name": "Hello World Test",
+    "command": "echo 'Hello, World!'",
+    "expectedOutput": "Hello, World!"
+  },
+  {
+    "name": "GoodBye World Test",
+    "command": "echo 'GoodBye, World!'",
+    "expectedOutput": "Hello, World!"
+  },
+  {
+    "name": "MultiLine Test",
+    "command": "echo '1' && echo '2'",
+    "expectedOutput": "1\n2"
+  }
+]
 ```
 
 ## License
