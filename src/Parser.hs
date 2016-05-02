@@ -29,7 +29,7 @@ type TestDefinition = [String]
   ["\n\n1\n2\n\n3\n","\n\n4\n5\n6\n"]
 -}
 toSections :: String -> [TestSection]
-toSections contents = splitOn "----" contents
+toSections = splitOn "----"
 
 {-|
   Converts a test section into the corresponding test definition.
@@ -44,7 +44,7 @@ toSections contents = splitOn "----" contents
 
 -}
 toDefinition :: TestSection -> TestDefinition
-toDefinition section = filter (\x -> x /= "") $ lines section
+toDefinition section = filter (/= "") $ lines section
 
 {-|
   Converts a test definition into the corresponding Test.
