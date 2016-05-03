@@ -8,9 +8,11 @@ Maintainer  : cwellsny@nycap.rr.com
 module Main where
 
 import Control.Applicative ((<$>))
+import Control.Monad (zipWithM_)
 import Data.Aeson
 import Data.Text
 import qualified Data.ByteString.Lazy as B (readFile)
+import System.Console.ANSI
 import System.Environment (getArgs)
 import System.IO (hClose, hGetContents, openFile, IOMode(ReadMode))
 
@@ -36,6 +38,16 @@ testFile file = do
     Left err -> putStrLn err
     Right tests -> do
       results <- mapM runTest tests
-      let resultTexts = Prelude.zipWith showResults tests results
-      _ <- mapM putStrLn resultTexts
+      zipWithM_ printResults tests results
       return ()
+
+{-|
+  Prints out the results of the given test with a color based on the results.
+  Passing tests are printed in green, and failing tests are printed in red.
+-}
+printResults :: Test -> TestResults -> IO ()
+printResults test results = do
+  case results of
+    (True, _) -> setSGR [SetColor Foreground Dull Green]
+    (False, _) -> setSGR [SetColor Foreground Dull Red]
+  putStrLn $ showResults test results
