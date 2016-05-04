@@ -16,6 +16,8 @@ System Test is a Haskell application which allows you to specify and run system 
 ]
 ```
 
+**Note:** System Test does not run the test commands in sandboxes, so be careful of running system tests that may cause harm to your system.
+
 ## Usage
 The System Test executable file should be run with all of the files containing system tests being passed in as arguments.
 
