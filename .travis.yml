@@ -12,3 +12,4 @@ script:
   - cabal test
   - doctest src/*.hs
   - cabal haddock --executables
+  - cabal check
