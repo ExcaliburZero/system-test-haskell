@@ -10,12 +10,11 @@ module Main where
 import Control.Applicative ((<$>))
 import Control.Monad (zipWithM_)
 import Data.Aeson
-import Data.Text
+import Data.Text()
 import qualified Data.ByteString.Lazy as B (readFile)
 import System.Console.ANSI
 import System.Environment (getArgs)
 import System.Exit (exitFailure, exitSuccess)
-import System.IO (hClose, hGetContents, openFile, IOMode(ReadMode))
 
 import Test
 

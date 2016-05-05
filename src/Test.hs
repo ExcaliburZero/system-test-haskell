@@ -55,8 +55,8 @@ type TestResults = (Bool, String)
   (False,"Goodbye, World!")
 -}
 runTest :: Test -> IO TestResults
-runTest (Test _ command expected) = do
-  (_, Just stdout, _, handler) <- createProcess (shell command){ std_out = CreatePipe }
+runTest (Test _ testCommand expected) = do
+  (_, Just stdout, _, handler) <- createProcess (shell testCommand){ std_out = CreatePipe }
   _ <- waitForProcess handler
   actualNL <- hGetContents stdout
   let actual = Prelude.init actualNL
@@ -78,5 +78,5 @@ runTest (Test _ command expected) = do
   "GoodbyeTest: Failed\n  Expected: Hello, World!\n  Actual:   Goodbye, World!"
 -}
 showResults :: Test -> TestResults -> String
-showResults (Test name _ _) (True, _) = name ++ ": Passed"
-showResults (Test name _ expected) (False, actual) = name ++ ": Failed\n  Expected: " ++ expected ++ "\n  Actual:   " ++ actual
+showResults (Test testName _ _) (True, _) = testName ++ ": Passed"
+showResults (Test testName _ expected) (False, actual) = testName ++ ": Failed\n  Expected: " ++ expected ++ "\n  Actual:   " ++ actual
