@@ -59,7 +59,7 @@ runTest (Test _ testCommand expected) = do
   (_, Just stdout, _, handler) <- createProcess (shell testCommand){ std_out = CreatePipe }
   _ <- waitForProcess handler
   actualNL <- hGetContents stdout
-  let actual = Prelude.init actualNL
+  let actual = if not $ Prelude.null actualNL then Prelude.init actualNL else actualNL
   let result = expected == actual
   return (result, actual)
 
