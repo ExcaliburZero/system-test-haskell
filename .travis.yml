@@ -10,6 +10,7 @@ script:
   - cabal configure --enable-tests
   - cabal build
   - cabal test
+  - ./dist/build/system-test/system-test tests/system/tests.json
   - doctest src/*.hs
   - cabal haddock --executables
   - cabal check
