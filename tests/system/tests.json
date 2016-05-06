@@ -3,5 +3,10 @@
     "name": "Run with no test files",
     "command": "./dist/build/system-test/system-test",
     "expectedOutput": ""
+  },
+  {
+    "name": "Run with example test file",
+    "command": "./dist/build/system-test/system-test examples/test.json",
+    "expectedOutput": "Hello World Test: Passed\nGoodBye World Test: Failed\n  Expected: Hello, World!\n  Actual:   GoodBye, World!\nMultiLine Test: Passed\n\n1 / 3 tests failed"
   }
 ]
