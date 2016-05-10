@@ -18,6 +18,7 @@ cabal-version:        >=1.10
 
 Extra-Source-Files:
   README.md
+  CHANGELOG.md
   examples/*.json
 
 executable system-test
