@@ -1,5 +1,9 @@
 # System Test [![Travis CI Status](https://api.travis-ci.org/ExcaliburZero/system-test-haskell.svg)](https://travis-ci.org/ExcaliburZero/system-test-haskell)
-System Test is a Haskell application which allows you to specify and run system tests of applications. System tests can be defined in text files with the following format, see `examples/` for more examples:
+System Test is a Haskell application which allows you to specify and run system tests of applications.
+
+![Recording of System Test](screenshot.gif)
+
+System tests can be defined in json files with the following format, see `examples/` for more examples:
 
 ```
 [
