@@ -5,7 +5,7 @@ Copyright   : (c) Christopher Wells, 2016
 License     : MIT
 Maintainer  : cwellsny@nycap.rr.com
 -}
-module Test where
+module SystemTest.Test where
 
 import Control.Applicative ((<$>), (<*>))
 import Control.Monad (mzero)

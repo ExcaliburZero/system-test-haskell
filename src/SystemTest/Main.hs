@@ -5,7 +5,7 @@ Copyright   : (c) Christopher Wells, 2016
 License     : MIT
 Maintainer  : cwellsny@nycap.rr.com
 -}
-module Main where
+module SystemTest.Main where
 
 import Control.Applicative ((<$>))
 import Control.Monad (zipWithM_)
@@ -16,13 +16,13 @@ import System.Console.ANSI
 import System.Environment (getArgs)
 import System.Exit (exitFailure, exitSuccess)
 
-import Test
+import SystemTest.Test
 
 {-|
   Gets the files to be tested and runs the tests they contain.
 -}
-main :: IO ()
-main = do
+progMain :: IO ()
+progMain = do
   args <- getArgs
   _ <- mapM testFile args
   return ()
