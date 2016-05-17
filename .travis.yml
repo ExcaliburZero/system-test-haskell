@@ -7,10 +7,13 @@ before_install:
   - cabal install doctest
 
 script:
-  - cabal configure --enable-tests
+  - cabal configure --enable-tests  --enable-library-coverage
   - cabal build
   - cabal test
   - ./dist/build/system-test/system-test tests/system/tests.json
   - doctest src/SystemTest/*.hs
   - cabal haddock
   - cabal check
+after_script:
+  - cabal install hpc-coveralls
+  - hpc-coveralls unit-tests
