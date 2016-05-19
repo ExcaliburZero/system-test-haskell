@@ -1,7 +1,7 @@
 [
   {
     "name": "Run with no test files",
-    "command": "./dist/build/system-test/system-test",
+    "command": "system-test",
     "expectedOutput": ""
   }
 ]

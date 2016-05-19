@@ -1,19 +1,41 @@
 language: haskell
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.stack
+
 ghc:
   - 7.8
 
 before_install:
-  - cabal install doctest
+  # Download and unpack the stack executable
+  - mkdir -p ~/.local/bin
+  - export PATH=$HOME/.local/bin:$PATH
+  - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+  # Setup Stack and install dependencies for tools
+  - stack setup --no-terminal
+  - stack install stack-hpc-coveralls --no-terminal
+
+install:
+  # Overwrite the default installation command used by Travis CI
+  - echo "Dependencies are installed by Stack in the build process."
 
 script:
-  - cabal configure --enable-tests  --enable-library-coverage
-  - cabal build
-  - cabal test
-  - ./dist/build/system-test/system-test tests/system/tests.json
-  - doctest src/SystemTest/*.hs
-  - cabal haddock
+  # Build and test the program
+  - stack build --no-terminal --coverage
+  - stack test --no-terminal --coverage
+
+  # Install and run the system tests of the program, using the program
+  - stack install --no-terminal
+  - system-test tests/system/tests.json
+
+  # Generate the documentation and check the package validity
+  - stack haddock --no-terminal
   - cabal check
+
 after_script:
-  - cabal install hpc-coveralls
-  - hpc-coveralls unit-tests
+  # Send a test coverage report to Coveralls.io
+  - shc system-test unit-tests
