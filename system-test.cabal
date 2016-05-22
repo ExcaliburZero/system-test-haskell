@@ -1,5 +1,5 @@
 name:                 system-test
-version:              0.1.1
+version:              0.1.2
 synopsis:             Runs system tests of applications.
 description:          System Test is a Haskell application which allows you to
                       specify and run system tests of applications. Tests are
