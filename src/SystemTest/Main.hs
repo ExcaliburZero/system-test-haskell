@@ -7,7 +7,6 @@ Maintainer  : cwellsny@nycap.rr.com
 -}
 module SystemTest.Main where
 
-import Control.Applicative ((<$>))
 import Control.Monad (zipWithM_)
 import Data.Aeson
 import Data.Text()

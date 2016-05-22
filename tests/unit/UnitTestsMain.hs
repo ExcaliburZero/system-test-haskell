@@ -16,7 +16,7 @@ main :: IO Counts
 main = do
   let tests = TestList [ TestLabel "showResults Pass" testShowResultsPass
                        , TestLabel "showResults Fail" testShowResultsFail
-		       ]
+                       ]
   runTestTT tests
 
 -- | A case of the showResults function where a passing test is given.
