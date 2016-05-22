@@ -5,7 +5,7 @@ Copyright   : (c) Christopher Wells, 2016
 License     : MIT
 Maintainer  : cwellsny@nycap.rr.com
 -}
-module SystemTest.Test where
+module Test.SystemTest.Test where
 
 import Control.Monad (mzero)
 import Data.Aeson

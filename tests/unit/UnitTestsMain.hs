@@ -9,7 +9,7 @@ module Main where
 
 import Test.HUnit
 
-import SystemTest.Test
+import Test.SystemTest.Test
 
 -- | Runs the unit tests of the program
 main :: IO Counts

@@ -7,7 +7,7 @@ Maintainer  : cwellsny@nycap.rr.com
 -}
 module Main where
 
-import SystemTest.Main
+import Test.SystemTest.Main
 
 -- | Runs the main function of the program.
 main :: IO ()

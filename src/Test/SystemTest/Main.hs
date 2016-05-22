@@ -5,7 +5,7 @@ Copyright   : (c) Christopher Wells, 2016
 License     : MIT
 Maintainer  : cwellsny@nycap.rr.com
 -}
-module SystemTest.Main where
+module Test.SystemTest.Main where
 
 import Control.Monad (zipWithM_)
 import Data.Aeson
@@ -15,7 +15,7 @@ import System.Console.ANSI
 import System.Environment (getArgs)
 import System.Exit (exitFailure, exitSuccess)
 
-import SystemTest.Test
+import Test.SystemTest.Test
 
 {-|
   Gets the files to be tested and runs the tests they contain.

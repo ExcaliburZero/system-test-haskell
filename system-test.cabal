@@ -23,8 +23,8 @@ Extra-Source-Files:
 
 library
   exposed-modules:
-    SystemTest.Main
-    SystemTest.Test
+    Test.SystemTest.Main
+    Test.SystemTest.Test
   hs-source-dirs:       src
   build-depends:        base >= 4.7 && < 5,
                         process >= 1.2.0.0,
