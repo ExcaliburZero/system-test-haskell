@@ -20,8 +20,8 @@ before_install:
   - stack install stack-hpc-coveralls --no-terminal
 
 install:
-  # Overwrite the default installation command used by Travis CI
-  - echo "Dependencies are installed by Stack in the build process."
+  # Install the program's dependencies
+  - stack install --only-dependencies --no-terminal
 
 script:
   # Build and test the program
